@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { getMenuItems } from "../../modules/menu/menu.api";
 import { buildMenuTree } from "../../modules/menu/menu.utils";
 import type { MenuNode } from "../../modules/menu/menu.utils";
+import "../../styles/sidebar.css";
 
 export default function Sidebar() {
   const [menus, setMenus] = useState<MenuNode[]>([]);
@@ -14,62 +15,67 @@ export default function Sidebar() {
   }, []);
 
   return (
-    <div
-      style={{
-        width: 220,
-        background: "#1e293b",
-        color: "#fff",
-        overflowY: "auto",
-        height: "100vh",
-      }}
-    >
-      <h3 style={{ padding: 10 }}>HRIS</h3>
-      <MenuList menus={menus} />
+    <div className="sidebar">
+      <div className="sidebar-header">
+        <h3>HRIS</h3>
+      </div>
+      <div className="sidebar-menu">
+        <MenuList menus={menus} />
+      </div>
     </div>
   );
 }
 
-// Recursive menu rendering - all expanded by default
 function MenuList({ menus }: { menus: MenuNode[] }) {
+  const location = useLocation();
+  const [expanded, setExpanded] = useState<Record<number, boolean>>({});
+
+  const toggleMenu = (id: number) => {
+    setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
   return (
     <>
-      {menus.map((menu) => (
-        <div key={menu.menuItemId} style={{ paddingLeft: 10 }}>
-          {menu.routeUrl ? (
-            // Leaf node with route
-            <Link
-              to={menu.routeUrl}
-              style={{
-                display: "block",
-                padding: "8px 12px",
-                color: "#fff",
-                textDecoration: "none",
-                cursor: "pointer",
-              }}
-            >
-              {menu.menuName}
-            </Link>
-          ) : (
-            // Parent node (without route) - show as plain text
-            <div
-              style={{
-                padding: "8px 12px",
-                fontWeight: "bold",
-                color: "#fff",
-              }}
-            >
-              {menu.menuName}
-            </div>
-          )}
+      {menus.map((menu) => {
+        const isActive = menu.routeUrl === location.pathname;
+        const isExpanded = expanded[menu.menuItemId];
 
-          {/* Render children recursively */}
-          {menu.children && menu.children.length > 0 && (
-            <div>
-              <MenuList menus={menu.children} />
-            </div>
-          )}
-        </div>
-      ))}
+        return (
+          <div key={menu.menuItemId} className="menu-item">
+            {menu.routeUrl ? (
+              <Link
+                to={menu.routeUrl}
+                className={`menu-link ${isActive ? "active" : ""}`}
+              >
+                {menu.menuName}
+              </Link>
+            ) : (
+              <div
+                onClick={() => menu.expandable && toggleMenu(menu.menuItemId)}
+                className={`menu-parent ${!menu.expandable ? "not-expandable" : ""}`}
+              >
+                <span>{menu.menuName}</span>
+                {menu.expandable && (
+                  <span className={`menu-icon ${isExpanded ? "expanded" : ""}`}>
+                    ▶
+                  </span>
+                )}
+              </div>
+            )}
+
+            {menu.children && menu.children.length > 0 && (
+              <div
+                className="menu-children"
+                style={{
+                  display: !menu.expandable || isExpanded ? "block" : "none",
+                }}
+              >
+                <MenuList menus={menu.children} />
+              </div>
+            )}
+          </div>
+        );
+      })}
     </>
   );
 }

@@ -1,9 +1,3 @@
 export default function Footer() {
-  return (
-    <div
-      style={{ height: 40, borderTop: "1px solid #ddd", textAlign: "center" }}
-    >
-      © 2026 HRIS
-    </div>
-  );
+  return <div className="footer">@ 2026</div>;
 }
