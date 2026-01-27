@@ -1,14 +1,20 @@
 import { useState } from "react";
-import { login } from "../../api/auth.api";
+import { login } from "../auth.api";
+import { AuthService } from "../auth.service";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
       const result = await login(username, password);
-      alert("Token: " + result.token);
+      AuthService.login(result.token);
+      navigate("/", { replace: true });
+
+      // alert("Token: " + result.token);
     } catch {
       alert("Invalid username or password");
     }
