@@ -1,9 +1,9 @@
 export default function Topbar() {
   return (
     <div
-      style={{ height: 50, borderBottom: "1px solid #ddd", padding: "0 20px" }}
+      className="topbar"
     >
-      Logged in as: Admin
+      Welcome
     </div>
   );
 }
