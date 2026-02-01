@@ -7,6 +7,8 @@ import Dashboard from "../modules/dashboard";
 
 import Profile from "../modules/hr/employee-profile";
 
+import Organization from "../modules/setting/masterdata/organization";
+
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -16,7 +18,13 @@ export default function AppRoutes() {
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
             <Route path="/" element={<Dashboard />} />
+            {/* HR Module Routes */}
             <Route path="/hr/employee-profile" element={<Profile />} />
+            {/* Setting Module Routes */}
+            <Route
+              path="/setting/masterdata/organization"
+              element={<Organization />}
+            />
           </Route>
         </Route>
 
