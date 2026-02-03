@@ -1,5 +1,3 @@
-import type { MenuNode } from "./menu.utils";
-
 export interface MenuItem {
   menuItemId: number;
   parentMenuItemId?: number;
@@ -13,5 +11,5 @@ export interface MenuItem {
   canEdit: boolean;
   canDelete: boolean;
   expandable: boolean;
-  children?: MenuNode[];
+  children?: MenuItem[];
 }
