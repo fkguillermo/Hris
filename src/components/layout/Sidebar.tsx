@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { getMenuItems } from "../../modules/menu/menu.api";
-import { buildMenuTree } from "../../modules/menu/menu.utils";
-import type { MenuNode } from "../../modules/menu/menu.utils";
+import { getMenuItems } from "../../core/menu/menu.api";
+import { buildMenuTree } from "../../core/menu/menu.utils";
+import type { MenuNode } from "../../core/menu/menu.utils";
 import "../../styles/sidebar.css";
 
 export default function Sidebar() {
