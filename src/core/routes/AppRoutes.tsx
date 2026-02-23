@@ -9,6 +9,8 @@ import ProfilePage from "../../modules/hr/profile/ProfilePage";
 import MovementPAge from "../../modules/hr/movement/MovementPage";
 import LeavePage from "../../modules/hr/leave/LeavePage";
 
+import OrganizationPage from "../../modules/setting/Organization/pages/OrganizationPage";
+
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -21,6 +23,11 @@ export default function AppRoutes() {
             <Route path="/hr/profile" element={<ProfilePage />} />
             <Route path="/hr/movement" element={<MovementPAge />} />
             <Route path="/hr/leave" element={<LeavePage />} />
+
+            <Route
+              path="/setting/organization/*"
+              element={<OrganizationPage />}
+            />
           </Route>
         </Route>
 

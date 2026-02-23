@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { getCategories } from "../api/category.service";
+import { fetchCategories } from "../api/category.api";
 
 export function useCategories() {
   const [options, setOptions] = useState<{ value: number; label: string }[]>(
     [],
   );
   useEffect(() => {
-    getCategories().then((data) =>
+    fetchCategories().then((data) =>
       setOptions(data.map((e) => ({ value: e.id, label: e.name }))),
     );
   }, []);

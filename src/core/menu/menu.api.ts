@@ -1,4 +1,4 @@
-import api from "../../services/api";
+import api from "../service/api";
 import type { MenuItem } from "./menu.types";
 
 export async function getMenuItems(): Promise<MenuItem[]> {
