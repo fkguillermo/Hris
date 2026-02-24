@@ -171,3 +171,9 @@ button.icon.danger {
 .organization-grid button:hover {
   opacity: 0.8;
 }
+
+.no-data {
+  text-align: center;
+  padding: 20px;
+  color: var(--color-gray);
+}

@@ -7,11 +7,9 @@ interface Props {
 }
 
 export const OrganizationGrid = ({ rows, onChange }: Props) => {
-  const [editingId, setEditingId] = useState<number | null>(null);
-
-  // Add new row
   const handleAdd = () => {
     const newRow: OrganizationData = {
+      id: Date.now(), // temporary unique id — replaced by server id after save
       code: "",
       description: "",
       isActive: true,
@@ -19,53 +17,35 @@ export const OrganizationGrid = ({ rows, onChange }: Props) => {
       isUpdate: false,
       isDeleted: false,
     };
-
-    console.log("Adding new row:", newRow); // Debug log
     onChange([...rows, newRow]);
   };
 
-  // Update existing row
   const handleUpdate = (
     id: number,
     field: keyof OrganizationData,
     value: any,
   ) => {
-    const updatedRows = rows.map((row) => {
-      if (row.id === id) {
-        return { ...row, [field]: value };
-      }
-      return row;
-    });
+    const updatedRows = rows.map((row) =>
+      row.id === id ? { ...row, [field]: value } : row,
+    );
     onChange(updatedRows);
   };
 
-  // Mark row for deletion
   const handleDelete = (id: number) => {
     const updatedRows = rows
       .map((row) => {
-        if (row.id === id) {
-          // If it's a new row, remove it completely
-          if (row.isNew) {
-            return null;
-          }
-          // Otherwise, mark for deletion
-          return { ...row, isDeleted: true };
-        }
-        return row;
+        if (row.id !== id) return row;
+        if (row.isNew) return null; // remove new rows entirely
+        return { ...row, isDeleted: true };
       })
       .filter(Boolean) as OrganizationData[];
-
     onChange(updatedRows);
   };
 
-  // Restore deleted row
   const handleRestore = (id: number) => {
-    const updatedRows = rows.map((row) => {
-      if (row.id === id) {
-        return { ...row, isDeleted: false };
-      }
-      return row;
-    });
+    const updatedRows = rows.map((row) =>
+      row.id === id ? { ...row, isDeleted: false } : row,
+    );
     onChange(updatedRows);
   };
 
@@ -78,6 +58,12 @@ export const OrganizationGrid = ({ rows, onChange }: Props) => {
       </div>
 
       <table>
+        <colgroup>
+          <col style={{ width: "8%" }} />
+          <col style={{ width: "82%" }} />
+          <col style={{ width: "5%" }} />
+          <col style={{ width: "5%" }} />
+        </colgroup>
         <thead>
           <tr>
             <th>Code</th>
@@ -112,7 +98,7 @@ export const OrganizationGrid = ({ rows, onChange }: Props) => {
                   disabled={row.isDeleted}
                 />
               </td>
-              <td>
+              <td style={{ textAlign: "center" }}>
                 <input
                   type="checkbox"
                   checked={row.isActive}
