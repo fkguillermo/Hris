@@ -1,0 +1,24 @@
+:root {
+  /* spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+
+  /* radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+
+  /* colors */
+  --color-primary: #2563eb;
+  --color-danger: #dc2626;
+  --color-gray: #6b7280;
+
+  /* typography */
+  --font-body: 14px;
+  --font-title: 18px;
+
+  /* control paddings */
+  --control-padding-y: 6px;
+  --control-padding-x: 12px;
+}

@@ -28,6 +28,12 @@ const OrganizationPageContent: React.FC = () => {
             <NavLink to="/setting/organization/company">Company</NavLink>
             <NavLink to="/setting/organization/branch">Branch</NavLink>
             <NavLink to="/setting/organization/division">Division</NavLink>
+            <NavLink to="/setting/organization/department">Department</NavLink>
+            <NavLink to="/setting/organization/section">Section</NavLink>
+            <NavLink to="/setting/organization/category">Category</NavLink>
+            <NavLink to="/setting/organization/grade">Grade</NavLink>
+            <NavLink to="/setting/organization/position">Position</NavLink>
+            <NavLink to="/setting/organization/jobclass">Job Class</NavLink>
           </div>
 
           <Routes>
@@ -43,6 +49,27 @@ const OrganizationPageContent: React.FC = () => {
             <Route
               path="division"
               element={<OrganizationTab entity="division" />}
+            />
+            <Route
+              path="department"
+              element={<OrganizationTab entity="department" />}
+            />
+            <Route
+              path="section"
+              element={<OrganizationTab entity="section" />}
+            />
+            <Route
+              path="category"
+              element={<OrganizationTab entity="category" />}
+            />
+            <Route path="grade" element={<OrganizationTab entity="grade" />} />
+            <Route
+              path="position"
+              element={<OrganizationTab entity="position" />}
+            />
+            <Route
+              path="jobclass"
+              element={<OrganizationTab entity="jobclass" />}
             />
           </Routes>
         </div>
