@@ -1,12 +1,14 @@
 import { useState } from "react";
 import type { OrganizationData } from "../organization.types";
+import { Button } from "../../../../components/controls/Button";
 
 interface Props {
   rows: OrganizationData[];
   onChange: (rows: OrganizationData[]) => void;
+  isReadOnly?: boolean;
 }
 
-export const OrganizationGrid = ({ rows, onChange }: Props) => {
+export const OrganizationGrid = ({ rows, onChange, isReadOnly }: Props) => {
   const handleAdd = () => {
     const newRow: OrganizationData = {
       id: Date.now(), // temporary unique id — replaced by server id after save
@@ -52,9 +54,9 @@ export const OrganizationGrid = ({ rows, onChange }: Props) => {
   return (
     <div className="organization-grid">
       <div className="grid-header">
-        <button onClick={handleAdd} className="btn-add">
+        <Button variant="primary" onClick={handleAdd} disabled={isReadOnly}>
           + Add New
-        </button>
+        </Button>
       </div>
 
       <table>
@@ -85,7 +87,7 @@ export const OrganizationGrid = ({ rows, onChange }: Props) => {
                   onChange={(e) =>
                     handleUpdate(row.id!, "code", e.target.value)
                   }
-                  disabled={row.isDeleted}
+                  disabled={row.isDeleted || isReadOnly}
                 />
               </td>
               <td>
@@ -95,7 +97,7 @@ export const OrganizationGrid = ({ rows, onChange }: Props) => {
                   onChange={(e) =>
                     handleUpdate(row.id!, "description", e.target.value)
                   }
-                  disabled={row.isDeleted}
+                  disabled={row.isDeleted || isReadOnly}
                 />
               </td>
               <td style={{ textAlign: "center" }}>
@@ -105,7 +107,7 @@ export const OrganizationGrid = ({ rows, onChange }: Props) => {
                   onChange={(e) =>
                     handleUpdate(row.id!, "isActive", e.target.checked)
                   }
-                  disabled={row.isDeleted}
+                  disabled={row.isDeleted || isReadOnly}
                 />
               </td>
               <td>
@@ -114,7 +116,12 @@ export const OrganizationGrid = ({ rows, onChange }: Props) => {
                     Restore
                   </button>
                 ) : (
-                  <button onClick={() => handleDelete(row.id!)}>Delete</button>
+                  <button
+                    onClick={() => handleDelete(row.id!)}
+                    disabled={isReadOnly || isReadOnly}
+                  >
+                    Delete
+                  </button>
                 )}
               </td>
             </tr>

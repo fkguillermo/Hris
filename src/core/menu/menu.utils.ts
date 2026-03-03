@@ -2,27 +2,25 @@ import type { MenuItem } from "./menu.types";
 export type MenuNode = MenuItem & { children: MenuNode[] };
 
 export function buildMenuTree(items: MenuItem[]): MenuNode[] {
+  const visible = items.filter((m) => m.canView);
+
   const map = new Map<number, MenuNode>();
   const roots: MenuNode[] = [];
 
-  items.forEach((item) => {
-    map.set(item.menuItemId, { ...item, children: [] });
-  });
+  visible.forEach((m) => map.set(m.menuItemId, { ...m, children: [] }));
 
-  items.forEach((item) => {
-    if (item.parentMenuItemId) {
-      map.get(item.parentMenuItemId)?.children.push(map.get(item.menuItemId)!);
-    } else {
-      roots.push(map.get(item.menuItemId)!);
+  visible.forEach((m) => {
+    if (m.parentMenuItemId && map.has(m.parentMenuItemId)) {
+      map.get(m.parentMenuItemId)!.children.push(map.get(m.menuItemId)!);
+    } else if (!m.parentMenuItemId) {
+      roots.push(map.get(m.menuItemId)!);
     }
   });
 
-  const sortMenus = (menus: MenuNode[]) => {
-    menus.sort((a, b) => a.displayOrder - b.displayOrder);
-    menus.forEach((m) => sortMenus(m.children));
-  };
-
-  sortMenus(roots);
+  roots.sort((a, b) => a.displayOrder - b.displayOrder);
+  roots.forEach((r) =>
+    r.children.sort((a, b) => a.displayOrder - b.displayOrder),
+  );
 
   return roots;
 }

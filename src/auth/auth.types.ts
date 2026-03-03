@@ -1,3 +1,6 @@
-export interface LoginResponse {
-  token: string;
+export interface AuthUser {
+  employeeId: number;
+  canProcess: boolean;
+  canApprove: boolean;
+  canPost: boolean;
 }
