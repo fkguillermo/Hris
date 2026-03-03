@@ -4,10 +4,12 @@ import { OrganizationTab } from "./OrganizationTab";
 import { OrganizationPageActions } from "./OrganizationPageActions";
 import { ContentCard } from "../../../../components/layout/ContentCard";
 import "../../../../styles/setting/organization/organization.css";
+import { userMenuPermission } from "../../../../core/menu/userMenuPermission";
 
 import { OrganizationProvider, useOrganization } from "./OrganizationContext";
 
 const OrganizationPageContent: React.FC = () => {
+  const { isReadOnly } = userMenuPermission();
   const { hasChanges, triggerSave, triggerCancel, triggerRefresh } =
     useOrganization();
 
@@ -19,6 +21,7 @@ const OrganizationPageContent: React.FC = () => {
           onSave={triggerSave}
           onCancel={triggerCancel}
           hasChanges={hasChanges}
+          isReadOnly={isReadOnly}
         />
       }
     >
@@ -40,36 +43,57 @@ const OrganizationPageContent: React.FC = () => {
             <Route path="/" element={<Navigate to="company" replace />} />
             <Route
               path="company"
-              element={<OrganizationTab entity="company" />}
+              element={
+                <OrganizationTab entity="company" isReadOnly={isReadOnly} />
+              }
             />
             <Route
               path="branch"
-              element={<OrganizationTab entity="branch" />}
+              element={
+                <OrganizationTab entity="branch" isReadOnly={isReadOnly} />
+              }
             />
             <Route
               path="division"
-              element={<OrganizationTab entity="division" />}
+              element={
+                <OrganizationTab entity="division" isReadOnly={isReadOnly} />
+              }
             />
             <Route
               path="department"
-              element={<OrganizationTab entity="department" />}
+              element={
+                <OrganizationTab entity="department" isReadOnly={isReadOnly} />
+              }
             />
             <Route
               path="section"
-              element={<OrganizationTab entity="section" />}
+              element={
+                <OrganizationTab entity="section" isReadOnly={isReadOnly} />
+              }
             />
             <Route
               path="category"
-              element={<OrganizationTab entity="category" />}
+              element={
+                <OrganizationTab entity="category" isReadOnly={isReadOnly} />
+              }
             />
-            <Route path="grade" element={<OrganizationTab entity="grade" />} />
+            <Route
+              path="grade"
+              element={
+                <OrganizationTab entity="grade" isReadOnly={isReadOnly} />
+              }
+            />
             <Route
               path="position"
-              element={<OrganizationTab entity="position" />}
+              element={
+                <OrganizationTab entity="position" isReadOnly={isReadOnly} />
+              }
             />
             <Route
               path="jobclass"
-              element={<OrganizationTab entity="jobclass" />}
+              element={
+                <OrganizationTab entity="jobclass" isReadOnly={isReadOnly} />
+              }
             />
           </Routes>
         </div>

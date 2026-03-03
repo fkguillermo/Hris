@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { getMenuItems } from "../../core/menu/menu.api";
 import { buildMenuTree } from "../../core/menu/menu.utils";
 import type { MenuNode } from "../../core/menu/menu.utils";
+import { MenuStore } from "../../core/menu/menu.store";
 import "../../styles/sidebar.css";
 
 export default function Sidebar() {
@@ -10,8 +11,11 @@ export default function Sidebar() {
 
   useEffect(() => {
     getMenuItems()
-      .then((items) => setMenus(buildMenuTree(items)))
-      .catch((err) => console.error("Failed to load menus:", err));
+      .then((items) => {
+        MenuStore.set(items);
+        setMenus(buildMenuTree(items));
+      })
+      .catch((err) => console.error(err));
   }, []);
 
   return (

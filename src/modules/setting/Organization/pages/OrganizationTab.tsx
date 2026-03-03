@@ -9,9 +9,10 @@ import { useOrganization } from "./OrganizationContext";
 
 interface Props {
   entity: string;
+  isReadOnly?: boolean;
 }
 
-export const OrganizationTab = ({ entity }: Props) => {
+export const OrganizationTab = ({ entity, isReadOnly }: Props) => {
   const { setHasChanges, registerHandlers } = useOrganization();
   const [rows, setRows] = useState<OrganizationData[]>([]);
   const [originalRows, setOriginalRows] = useState<OrganizationData[]>([]);
@@ -112,5 +113,11 @@ export const OrganizationTab = ({ entity }: Props) => {
   if (loading) return <div className="loading">Loading…</div>;
   if (loadError) return <div className="no-data">No Data</div>;
 
-  return <OrganizationGrid rows={rows} onChange={handleRowsChange} />;
+  return (
+    <OrganizationGrid
+      rows={rows}
+      onChange={handleRowsChange}
+      isReadOnly={isReadOnly}
+    />
+  );
 };

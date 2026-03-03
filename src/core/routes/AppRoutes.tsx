@@ -1,14 +1,18 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import LoginPage from "../../auth/pages/LoginPage";
+
 import ProtectedRoute from "./ProtectedRoute";
+import MenuProtectedRoute from "./MenuProtectedRoute";
+
 import AppLayout from "../../components/layout/AppLayout";
 
-import Dashboard from "../../modules/dashboard/dashboard";
+import LoginPage from "../../auth/pages/LoginPage";
 
+import DashboardPage from "../../modules/dashboard/DashboardPage";
+// HR Pages
 import ProfilePage from "../../modules/hr/profile/ProfilePage";
-import MovementPAge from "../../modules/hr/movement/MovementPage";
+import MovementPage from "../../modules/hr/movement/MovementPage";
 import LeavePage from "../../modules/hr/leave/LeavePage";
-
+// Setting Pages
 import OrganizationPage from "../../modules/setting/Organization/pages/OrganizationPage";
 
 export default function AppRoutes() {
@@ -19,15 +23,17 @@ export default function AppRoutes() {
 
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/hr/profile" element={<ProfilePage />} />
-            <Route path="/hr/movement" element={<MovementPAge />} />
-            <Route path="/hr/leave" element={<LeavePage />} />
+            <Route element={<MenuProtectedRoute />}>
+              <Route path="/" element={<DashboardPage />} />
+              <Route path="/hr/profile" element={<ProfilePage />} />
+              <Route path="/hr/movement" element={<MovementPage />} />
+              <Route path="/hr/leave" element={<LeavePage />} />
 
-            <Route
-              path="/setting/organization/*"
-              element={<OrganizationPage />}
-            />
+              <Route
+                path="/setting/organization/*"
+                element={<OrganizationPage />}
+              />
+            </Route>
           </Route>
         </Route>
 

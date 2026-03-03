@@ -7,6 +7,7 @@ interface OrganizationActionsProps {
   onSave: () => void;
   onCancel?: () => void;
   hasChanges?: boolean;
+  isReadOnly?: boolean;
 }
 
 export const OrganizationPageActions: React.FC<OrganizationActionsProps> = ({
@@ -14,24 +15,20 @@ export const OrganizationPageActions: React.FC<OrganizationActionsProps> = ({
   onSave,
   onCancel,
   hasChanges,
+  isReadOnly,
 }) => {
+  const hasPermission = !isReadOnly;
+  const isActionDisabled = !hasChanges || !hasPermission;
+
   return (
     <ActionPanel>
       <Button variant="primary" onClick={onRefresh}>
         Refresh
       </Button>
-      <Button
-        variant="primary"
-        onClick={onSave}
-        disabled={!hasChanges} // Optional: disable Save when no changes
-      >
+      <Button variant="primary" onClick={onSave} disabled={isActionDisabled}>
         Save
       </Button>
-      <Button
-        variant="primary"
-        onClick={onCancel}
-        disabled={!hasChanges} // Optional: disable Cancel when no changes
-      >
+      <Button variant="primary" onClick={onCancel} disabled={isActionDisabled}>
         Cancel
       </Button>
     </ActionPanel>
