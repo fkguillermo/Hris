@@ -1,27 +1,29 @@
 import { NavLink, Routes, Route, Navigate } from "react-router-dom";
 import { PageShell } from "../../../../components/layout/PageShell";
 import { OrganizationTab } from "./OrganizationTab";
-import { OrganizationPageActions } from "./OrganizationPageActions";
 import { ContentCard } from "../../../../components/layout/ContentCard";
 import "../../../../styles/setting/organization/organization.css";
 import { userMenuPermission } from "../../../../core/menu/userMenuPermission";
-
 import { OrganizationProvider, useOrganization } from "./OrganizationContext";
+import { PageActions } from "../../../../components/layout/PageActions";
+import { CommonActions } from "../../../../common/CommonActions";
 
 const OrganizationPageContent: React.FC = () => {
   const { isReadOnly } = userMenuPermission();
-  const { hasChanges, triggerSave, triggerCancel, triggerRefresh } =
-    useOrganization();
+  const { hasChanges, onSave, onCancel, onRefresh } = useOrganization();
+
+  const hasPermission = !isReadOnly;
+  const isActionDisabled = !hasChanges || !hasPermission;
 
   return (
     <PageShell
       actions={
-        <OrganizationPageActions
-          onRefresh={triggerRefresh}
-          onSave={triggerSave}
-          onCancel={triggerCancel}
-          hasChanges={hasChanges}
-          isReadOnly={isReadOnly}
+        <PageActions
+          actions={[
+            CommonActions.refresh(onRefresh, !hasPermission),
+            CommonActions.save(onSave, isActionDisabled),
+            CommonActions.cancel(onCancel, isActionDisabled),
+          ]}
         />
       }
     >

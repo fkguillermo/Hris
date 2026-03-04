@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { OrganizationData } from "../organization.types";
 import { Button } from "../../../../components/controls/Button";
+import { CommonActions } from "../../../../common/CommonActions";
 
 interface Props {
   rows: OrganizationData[];
@@ -51,11 +52,17 @@ export const OrganizationGrid = ({ rows, onChange, isReadOnly }: Props) => {
     onChange(updatedRows);
   };
 
+  const addAction = CommonActions.add(handleAdd, isReadOnly);
+
   return (
     <div className="organization-grid">
       <div className="grid-header">
-        <Button variant="primary" onClick={handleAdd} disabled={isReadOnly}>
-          + Add New
+        <Button
+          variant={addAction.variant}
+          onClick={addAction.onClick}
+          disabled={addAction.disabled}
+        >
+          {addAction.label}
         </Button>
       </div>
 
