@@ -11,9 +11,9 @@ import type { ReactNode } from "react";
 interface OrganizationContextType {
   hasChanges: boolean;
   setHasChanges: (value: boolean) => void;
-  triggerSave: () => Promise<void>;
-  triggerCancel: () => void;
-  triggerRefresh: () => Promise<void>;
+  onSave: () => Promise<void>;
+  onCancel: () => void;
+  onRefresh: () => Promise<void>;
   registerHandlers: (handlers: {
     save: () => Promise<void>;
     cancel: () => void;
@@ -39,8 +39,7 @@ export const OrganizationProvider = ({ children }: { children: ReactNode }) => {
     refresh?: () => Promise<void>;
   }>({});
 
-  const triggerSave = useCallback(async () => {
-    console.log("triggerSave called", handlersRef.current.save);
+  const onSave = useCallback(async () => {
     if (handlersRef.current.save) {
       await handlersRef.current.save();
     } else {
@@ -48,8 +47,7 @@ export const OrganizationProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  const triggerCancel = useCallback(() => {
-    console.log("triggerCancel called", handlersRef.current.cancel);
+  const onCancel = useCallback(() => {
     if (handlersRef.current.cancel) {
       handlersRef.current.cancel();
     } else {
@@ -57,8 +55,7 @@ export const OrganizationProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  const triggerRefresh = useCallback(async () => {
-    console.log("triggerRefresh called", handlersRef.current.refresh);
+  const onRefresh = useCallback(async () => {
     if (handlersRef.current.refresh) {
       await handlersRef.current.refresh();
     } else {
@@ -84,9 +81,9 @@ export const OrganizationProvider = ({ children }: { children: ReactNode }) => {
       value={{
         hasChanges,
         setHasChanges,
-        triggerSave,
-        triggerCancel,
-        triggerRefresh,
+        onSave,
+        onCancel,
+        onRefresh,
         registerHandlers,
       }}
     >

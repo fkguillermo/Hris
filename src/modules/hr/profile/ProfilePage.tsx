@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { PageShell } from "../../../components/layout/PageShell";
 import { ProfilePageFilters } from "./ProfilePageFilters";
-import { ProfilePageActions } from "./ProfilePageActions";
+import {
+  PageActions,
+  type PageAction,
+} from "../../../components/layout/PageActions";
 import { ContentCard } from "../../../components/layout/ContentCard";
+import { CommonActions } from "../../../common/CommonActions";
 
 export const ProfilePage: React.FC = () => {
   const [selectedEmployee, setSelectedEmployee] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  const handleSearch = () => {
+  const onSearch = () => {
     console.log("Search clicked!");
     console.log("Selected Employee:", selectedEmployee);
     console.log("Selected Category:", selectedCategory);
@@ -19,10 +23,15 @@ export const ProfilePage: React.FC = () => {
     // e.g., fetch data, filter results, etc.
   };
 
-  const handleReset = () => {
+  const onReset = () => {
     setSelectedEmployee("");
     setSelectedCategory("");
     console.log("Filters reset!");
+  };
+
+  const onEdit = () => {
+    console.log("Edit clicked!");
+    // Implement edit logic here
   };
 
   return (
@@ -37,7 +46,17 @@ export const ProfilePage: React.FC = () => {
         />
       }
       actions={
-        <ProfilePageActions onSearch={handleSearch} onReset={handleReset} />
+        <PageActions
+          actions={
+            [
+              CommonActions.search(onSearch),
+              CommonActions.reset(onReset),
+              CommonActions.edit(() => alert("Edit action triggered!")),
+              CommonActions.delete(() => alert("Delete action triggered!")),
+              CommonActions.export(() => alert("Export action triggered!")),
+            ].filter(Boolean) as PageAction[]
+          }
+        />
       }
     >
       <ContentCard title="Profile Page Content">

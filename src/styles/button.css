@@ -1,0 +1,77 @@
+/* Base button style */
+.button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+/* Primary: Blue → standard interaction */
+.button--primary {
+  background-color: #2563eb; /* blue-600 */
+  color: white;
+}
+
+.button--primary:hover:not(:disabled) {
+  background-color: #1d4ed8; /* blue-700 */
+}
+
+/* Success: Green → positive outcome */
+.button--success {
+  background-color: #16a34a; /* green-600 */
+  color: white;
+}
+
+.button--success:hover:not(:disabled) {
+  background-color: #15803d; /* green-700 */
+}
+
+/* Danger: Red → destructive */
+.button--danger {
+  background-color: #dc2626; /* red-600 */
+  color: white;
+}
+
+.button--danger:hover:not(:disabled) {
+  background-color: #b91c1c; /* red-700 */
+}
+
+/* Secondary: Orange → caution / warning */
+.button--secondary {
+  background-color: #f59e0b; /* orange-500 */
+  color: white;
+}
+
+.button--secondary:hover:not(:disabled) {
+  background-color: #d97706; /* orange-600 */
+}
+
+/* Default: Gray → passive / neutral */
+.button--default {
+  background-color: #e5e7eb; /* gray-200 */
+  color: #111827; /* gray-900 text */
+}
+
+.button--default:hover:not(:disabled) {
+  background-color: #d1d5db; /* gray-300 */
+}
+
+/* Utility: Purple → special actions */
+.button--utility {
+  background-color: #9d00e0; /* purple-500 */
+  color: white;
+}
+
+.button--utility:hover:not(:disabled) {
+  background-color: #9d00e0; /* purple-600 */
+}
+
+/* Disabled state for all buttons */
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

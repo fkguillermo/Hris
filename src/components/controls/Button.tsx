@@ -1,5 +1,8 @@
+import "../../styles/Button.css";
+import type { ButtonVariant } from "../../common/ButtonVariants.ts";
+
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "default" | "primary" | "danger" | "success";
+  variant?: ButtonVariant;
   children: React.ReactNode;
 }
 
@@ -9,14 +12,10 @@ export const Button: React.FC<ButtonProps> = ({
   className = "",
   ...props
 }) => {
-  const variantClass =
-    variant !== "default" ? `action-panel__button--${variant}` : "";
+  const variantClass = `button--${variant}`; // use new base class
 
   return (
-    <button
-      className={`action-panel__button ${variantClass} ${className}`.trim()}
-      {...props}
-    >
+    <button className={`button ${variantClass} ${className}`.trim()} {...props}>
       {children}
     </button>
   );
