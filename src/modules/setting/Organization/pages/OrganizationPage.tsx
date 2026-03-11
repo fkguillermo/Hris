@@ -20,7 +20,7 @@ const OrganizationPageContent: React.FC = () => {
       actions={
         <PageActions
           actions={[
-            CommonActions.refresh(onRefresh, !hasPermission),
+            CommonActions.refresh(onRefresh),
             CommonActions.save(onSave, isActionDisabled),
             CommonActions.cancel(onCancel, isActionDisabled),
           ]}
