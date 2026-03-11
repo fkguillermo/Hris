@@ -10,11 +10,13 @@ export const AuthService = {
 
     const decoded: any = jwtDecode(token);
 
+    const toBool = (v: any) => v === true || v === "True" || v === "true";
+
     const user: AuthUser = {
       employeeId: Number(decoded.sub),
-      canProcess: decoded.canProcess === "True",
-      canApprove: decoded.canApprove === "True",
-      canPost: decoded.canPost === "True",
+      canProcess: toBool(decoded.canProcess),
+      canApprove: toBool(decoded.canApprove),
+      canPost: toBool(decoded.canPost),
     };
 
     localStorage.setItem(USER_KEY, JSON.stringify(user));

@@ -63,4 +63,32 @@ export const CommonActions = {
     onClick,
     disabled,
   }),
+
+  reject: (onClick: () => void, disabled?: boolean): PageAction => ({
+    label: "Reject",
+    variant: "danger",
+    onClick,
+    disabled,
+  }),
+
+  process: (onClick: () => void, disabled?: boolean): PageAction => ({
+    label: "Process",
+    variant: "primary",
+    onClick,
+    disabled,
+  }),
+
+  approve: (onClick: () => void, disabled?: boolean): PageAction => ({
+    label: "Approve",
+    variant: "success",
+    onClick,
+    disabled,
+  }),
+
+  post: (onClick: () => void, disabled?: boolean): PageAction => ({
+    label: "Post",
+    variant: "primary",
+    onClick,
+    disabled,
+  }),
 };

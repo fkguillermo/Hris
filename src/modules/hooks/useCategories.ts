@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchCategories } from "../api/category.api";
+import { fetchCategories } from "../api/hr/category.api";
 
 export function useCategories() {
   const [options, setOptions] = useState<{ value: number; label: string }[]>(
@@ -11,4 +11,4 @@ export function useCategories() {
     );
   }, []);
   return options;
-};
+}

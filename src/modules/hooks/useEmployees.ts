@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchEmployees } from "../api/employee.api";
+import { fetchEmployees } from "../api/hr/employee.api";
 
 export const useEmployees = () => {
   const [options, setOptions] = useState<{ value: number; label: string }[]>(
