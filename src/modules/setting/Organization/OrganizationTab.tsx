@@ -1,10 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
-import { OrganizationGrid } from "../../../setting/Organization/components/OrganizationGrid";
-import {
-  fetchData,
-  saveData,
-} from "../../../setting/Organization/organization.api";
-import type { OrganizationData } from "../../../setting/Organization/organization.types";
+import { OrganizationGrid } from "../Organization/OrganizationGrid";
+import { fetchData, saveData } from "../../api/setting/organization.api";
+import type { OrganizationData } from "../../types/organization/organization.types";
 import { useOrganization } from "./OrganizationContext";
 
 interface Props {

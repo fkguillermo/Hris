@@ -14,6 +14,7 @@ export const AuthService = {
 
     const user: AuthUser = {
       employeeId: Number(decoded.sub),
+      companyId: 1, // Assuming companyId is fixed for now, adjust as needed
       canProcess: toBool(decoded.canProcess),
       canApprove: toBool(decoded.canApprove),
       canPost: toBool(decoded.canPost),
