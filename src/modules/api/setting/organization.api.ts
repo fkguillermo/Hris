@@ -1,5 +1,5 @@
 import api from "../../../core/service/api";
-import type { OrganizationData } from "./organization.types";
+import type { OrganizationData } from "../../types/organization/organization.types";
 
 export const fetchData = async (entity: string) => {
   const res = await api.get<OrganizationData[]>(

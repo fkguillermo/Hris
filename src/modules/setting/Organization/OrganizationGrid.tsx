@@ -1,7 +1,7 @@
 import { useState } from "react";
-import type { OrganizationData } from "../organization.types";
-import { Button } from "../../../../components/controls/Button";
-import { CommonActions } from "../../../../common/CommonActions";
+import type { OrganizationData } from "../../types/organization/organization.types";
+import { Button } from "../../../components/controls/Button";
+import { CommonActions } from "../../../common/CommonActions";
 
 interface Props {
   rows: OrganizationData[];

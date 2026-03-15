@@ -1,12 +1,13 @@
 import { NavLink, Routes, Route, Navigate } from "react-router-dom";
-import { PageShell } from "../../../../components/layout/PageShell";
+import { PageShell } from "../../../components/layout/PageShell";
 import { OrganizationTab } from "./OrganizationTab";
-import { ContentCard } from "../../../../components/layout/ContentCard";
-import "../../../../styles/setting/organization/organization.css";
-import { userMenuPermission } from "../../../../core/menu/userMenuPermission";
+import { ContentCard } from "../../../components/layout/ContentCard";
+import { userMenuPermission } from "../../../core/menu/userMenuPermission";
 import { OrganizationProvider, useOrganization } from "./OrganizationContext";
-import { PageActions } from "../../../../components/layout/PageActions";
-import { CommonActions } from "../../../../common/CommonActions";
+import { PageActions } from "../../../components/layout/PageActions";
+import { CommonActions } from "../../../common/CommonActions";
+
+import "../../../styles/setting/organization/organization.css";
 
 const OrganizationPageContent: React.FC = () => {
   const { isReadOnly } = userMenuPermission();

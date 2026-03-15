@@ -13,7 +13,8 @@ import ProfilePage from "../../modules/hr/profile/ProfilePage";
 import MovementPage from "../../modules/hr/movement/MovementPage";
 import LeavePage from "../../modules/hr/leave/LeavePage";
 // Setting Pages
-import OrganizationPage from "../../modules/setting/Organization/pages/OrganizationPage";
+import OrganizationPage from "../../modules/setting/Organization/OrganizationPage";
+import OrganizationStructurePage from "../../modules/setting/OrganizationStructure/OrganizationStructurePage";
 
 export default function AppRoutes() {
   return (
@@ -32,6 +33,10 @@ export default function AppRoutes() {
               <Route
                 path="/setting/organization/*"
                 element={<OrganizationPage />}
+              />
+              <Route
+                path="/setting/organization-structure/*"
+                element={<OrganizationStructurePage />}
               />
             </Route>
           </Route>
