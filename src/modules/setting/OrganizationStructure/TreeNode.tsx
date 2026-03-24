@@ -33,6 +33,8 @@ interface Props {
   showMessage: (success: boolean, message: string) => void;
   isRoot?: boolean;
   depth?: number;
+  expandedMap: Record<number, boolean>;
+  setExpandedMap: React.Dispatch<React.SetStateAction<Record<number, boolean>>>;
 }
 
 export default function TreeNode({
@@ -42,9 +44,11 @@ export default function TreeNode({
   showMessage,
   isRoot = false,
   depth = 0,
+  expandedMap,
+  setExpandedMap,
 }: Props) {
   const [showModal, setShowModal] = useState(false);
-  const [expanded, setExpanded] = useState(true);
+  // const [expanded, setExpanded] = useState(false);
   const { showMessageBox, messageBoxProps } = useMessageBox();
   const existingChildRefIds = node.children.map((c) => c.referenceId);
 
@@ -54,6 +58,15 @@ export default function TreeNode({
 
   const nodeTypeKey = nodeType as NodeTypeColor;
   const accent = NODE_COLORS[nodeTypeKey] ?? "#6b7280"; // fallback gray
+
+  const expanded = expandedMap[node.id] ?? false; // default collapsed
+
+  const toggle = () => {
+    setExpandedMap((prev) => ({
+      ...prev,
+      [node.id]: !expanded,
+    }));
+  };
 
   return (
     <div className={isRoot ? "tree-root" : "tree-node"}>
@@ -65,7 +78,7 @@ export default function TreeNode({
           <div className="tree-node__left">
             <button
               className="tree-node__toggle"
-              onClick={() => setExpanded((v) => !v)}
+              onClick={toggle}
               style={{ visibility: hasChildren ? "visible" : "hidden" }}
               title={expanded ? "Collapse" : "Expand"}
             >
@@ -107,7 +120,9 @@ export default function TreeNode({
               currentUserId={currentUserId}
               onRefresh={onRefresh}
               showMessage={showMessage}
-              depth={depth + 1}
+              // depth={(depth ?? 0) + 1}
+              expandedMap={expandedMap}
+              setExpandedMap={setExpandedMap}
             />
           ))}
         </div>
