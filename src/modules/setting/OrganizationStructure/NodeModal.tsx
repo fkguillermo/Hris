@@ -14,6 +14,7 @@ import type {
 import { Button } from "../../../components/controls/Button.tsx";
 
 const NODE_LABELS: Record<NodeType, string> = {
+  R: "Root",
   C: "Company",
   B: "Branch",
   V: "Division",
@@ -25,6 +26,7 @@ interface Props {
   parentNode: OrgHierarchyNode;
   childNodeType: NodeType;
   currentUserId: number;
+  existingReferenceIds?: number[];
   onSaved: () => void;
   onClose: () => void;
   showMessage: (success: boolean, message: string) => void;
@@ -34,6 +36,7 @@ export default function HierarchyModal({
   parentNode,
   childNodeType,
   currentUserId,
+  existingReferenceIds = [],
   onSaved,
   onClose,
   showMessage,
@@ -42,6 +45,9 @@ export default function HierarchyModal({
   const [selected, setSelected] = useState<Set<number>>(new Set());
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<number[]>(
+    existingReferenceIds ?? [],
+  );
 
   useEffect(() => {
     fetchOrgByNodeType(childNodeType).then((data) => {

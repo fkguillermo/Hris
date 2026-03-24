@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { deleteHierarchyNode } from "../../api/setting/orgStructure.api.ts";
+import { NODE_COLORS, type NodeTypeColor } from "../../../common/NodeColors.ts";
 import type {
   OrgHierarchyNode,
   NodeType,
@@ -26,20 +26,13 @@ const CHILD_LABEL: Partial<Record<string, string>> = {
   D: "Section",
 };
 
-const NODE_ACCENT: Partial<Record<string, string>> = {
-  C: "#2563eb",
-  B: "#7c3aed",
-  V: "#0891b2",
-  D: "#059669",
-  S: "#d97706",
-};
-
 interface Props {
   node: OrgHierarchyNode;
   currentUserId: number;
   onRefresh: () => void;
   showMessage: (success: boolean, message: string) => void;
   isRoot?: boolean;
+  depth?: number;
 }
 
 export default function TreeNode({
@@ -48,41 +41,27 @@ export default function TreeNode({
   onRefresh,
   showMessage,
   isRoot = false,
+  depth = 0,
 }: Props) {
   const [showModal, setShowModal] = useState(false);
   const [expanded, setExpanded] = useState(true);
   const { showMessageBox, messageBoxProps } = useMessageBox();
+  const existingChildRefIds = node.children.map((c) => c.referenceId);
 
   const nodeType = node.nodeType?.toString().trim();
   const childType = CHILD_TYPE[nodeType] as NodeType | undefined;
   const hasChildren = node.children.length > 0;
-  const accent = NODE_ACCENT[nodeType] ?? "#6b7280";
 
-  const handleDelete = () => {
-    showMessageBox({
-      title: "Confirm Delete",
-      message: `Delete ${node.code} — ${node.description}?`,
-      type: "confirm",
-      onOk: async () => {
-        try {
-          const result = await deleteHierarchyNode(node.id);
-          if (result.error) {
-            showMessage(false, result.error);
-          } else {
-            showMessage(true, `${node.code} deleted successfully.`);
-            onRefresh();
-          }
-        } catch (err: any) {
-          showMessage(false, err?.response?.data?.error ?? "Delete failed.");
-        }
-      },
-    });
-  };
+  const nodeTypeKey = nodeType as NodeTypeColor;
+  const accent = NODE_COLORS[nodeTypeKey] ?? "#6b7280"; // fallback gray
 
   return (
     <div className={isRoot ? "tree-root" : "tree-node"}>
       {!isRoot && (
-        <div className="tree-node__row">
+        <div
+          className="tree-node__row"
+          style={{ paddingLeft: `${Math.max(depth, 0) * 20}px` }}
+        >
           <div className="tree-node__left">
             <button
               className="tree-node__toggle"
@@ -103,13 +82,17 @@ export default function TreeNode({
 
           <div className="tree-node__actions">
             {childType && (
-              <Button variant="success" onClick={() => setShowModal(true)}>
+              <Button
+                style={{
+                  backgroundColor: NODE_COLORS[childType as NodeTypeColor],
+                  borderColor: NODE_COLORS[childType as NodeTypeColor],
+                  color: "#fff", // ensures contrast
+                }}
+                onClick={() => setShowModal(true)}
+              >
                 + Add {CHILD_LABEL[nodeType]}
               </Button>
             )}
-            <Button variant="danger" onClick={handleDelete}>
-              Delete
-            </Button>
           </div>
         </div>
       )}
@@ -124,6 +107,7 @@ export default function TreeNode({
               currentUserId={currentUserId}
               onRefresh={onRefresh}
               showMessage={showMessage}
+              depth={depth + 1}
             />
           ))}
         </div>
@@ -134,7 +118,14 @@ export default function TreeNode({
         <div className="tree-node__row">
           <div className="tree-node__left" />
           <div className="tree-node__actions">
-            <Button variant="success" onClick={() => setShowModal(true)}>
+            <Button
+              style={{
+                backgroundColor: NODE_COLORS["C" as NodeTypeColor],
+                borderColor: NODE_COLORS["C" as NodeTypeColor],
+                color: "#fff",
+              }}
+              onClick={() => setShowModal(true)}
+            >
               + Add Company
             </Button>
           </div>
@@ -148,6 +139,7 @@ export default function TreeNode({
           parentNode={node}
           childNodeType={childType}
           currentUserId={currentUserId}
+          existingReferenceIds={existingChildRefIds}
           onSaved={() => {
             setShowModal(false);
             onRefresh();

@@ -76,6 +76,7 @@
   cursor: not-allowed;
 }
 
+/* Size variants */
 .button--sm {
   padding: 6px 12px;
   font-size: 12px;
