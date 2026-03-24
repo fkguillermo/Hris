@@ -49,6 +49,7 @@ export default function OrganizationStructurePage() {
               onRefresh={loadTree}
               showMessage={showMessage}
               isRoot
+              depth={-1}
             />
           </div>
         </div>
