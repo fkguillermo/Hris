@@ -16,6 +16,7 @@ const CURRENT_USER = 1;
 export default function OrganizationStructurePage() {
   const [tree, setTree] = useState<OrgHierarchyNode[]>([]);
   const { toast, showMessage, closeToast } = useToast();
+  const [expandedMap, setExpandedMap] = useState<Record<number, boolean>>({});
 
   const loadTree = useCallback(() => {
     fetchOrgStructure(COMPANY_ID).then(setTree);
@@ -50,6 +51,8 @@ export default function OrganizationStructurePage() {
               showMessage={showMessage}
               isRoot
               depth={-1}
+              expandedMap={expandedMap}
+              setExpandedMap={setExpandedMap}
             />
           </div>
         </div>
